@@ -1,0 +1,22 @@
+{
+    "loggers": {
+        "FileLogger": {
+            "active": true
+        },
+        "StdoutLogger": {
+            "active": true
+        }
+    },
+    "servers": [
+        {
+            "handler": "ApacheServer",
+            "mode": "http",
+            "port": 8080,
+            "domain": "localhost",
+            "timeout": 10,
+            "doc_root": "/home/talla/sesameit2/lokiweb4/www/www.edukate.com"
+        }
+    ],
+    "user": "talla",
+    "group": "honeyhttpd"
+}
