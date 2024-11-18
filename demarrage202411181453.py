@@ -6,19 +6,21 @@ import argparse
 import threading
 from queue import Queue
 from http.server import HTTPServer, BaseHTTPRequestHandler
-import mimetypes
 from socketserver import ThreadingMixIn
 from termcolor import colored
 
 VERSION = "v0.5.3"
-BANNER = """ 
+BANNER = """
+       _______  _        _______                   __________________ _______  ______ 
+|\     /|(  ___  )( (    /|(  ____ \|\     /||\     /|\__   __/\__   __/(  ____ )(  __  \
+| )   ( || (   ) ||  \  ( || (    \/( \   / )| )   ( |   ) (      ) (   | (    )|| (  \  )
+| (___) || |   | ||   \ | || (__     \ (_) / | (___) |   | |      | |   | (____)|| |   ) |
+|  ___  || |   | || (\ \) ||  __)     \   /  |  ___  |   | |      | |   |  _____)| |   | |
+| (   ) || |   | || | \   || (         ) (   | (   ) |   | |      | |   | (      | |   ) |
+| )   ( || (___) || )  \  || (____/\   | |   | )   ( |   | |      | |   | )      | (__/  )
+|/     \|(_______)|/    )_)(_______/   \_/   |/     \|   )_(      )_(   |/       (______/
 
-    __       ____     __ __    ____   _       __   ______   ____     _____
-   / /      / __ \   / //_/   /  _/  | |     / /  / ____/  / __ )   / ___/
-  / /      / / / /  / ,<      / /    | | /| / /  / __/    / __  |   \__ \ 
- / /___   / /_/ /  / /| |   _/ /     | |/ |/ /  / /___   / /_/ /   ___/ / 
-/_____/   \____/  /_/ |_|  /___/     |__/|__/  /_____/  /_____/   /____/ 
- 
+
 """
 
 
@@ -101,7 +103,6 @@ class ServerManager:
             return 400, [("Connection", "close")], "Bad Request"
         return None, None
 
-
     def on_GET(self, path, headers):
         # Map root path '/' to 'index.html' by default
         if path == "/":
@@ -112,11 +113,9 @@ class ServerManager:
 
         # Serve the file if it exists
         if os.path.isfile(full_path):
-            mime_type, _ = mimetypes.guess_type(full_path)
-            mime_type = mime_type or "application/octet-stream"  # Default MIME type if unknown
             with open(full_path, "rb") as file:
                 data = file.read()
-            return 200, [("Content-Type", mime_type)], data
+            return 200, [("Content-Type", "text/html")], data
         else:
             # File not found
             return 404, [("Content-Type", "text/html")], "<html><body>Page Not Found</body></html>"
